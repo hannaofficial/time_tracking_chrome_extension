@@ -1,0 +1,34 @@
+{
+    "manifest_version": 3,
+    "name": "Browsing History Analyzer",
+    "version": "1.1",
+    "description": "Collects browsing history for analysis.",
+    "permissions": [
+      "tabs",
+    "windows",
+    "history",
+    "storage",
+    "alarms",
+    "activeTab"
+      
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts":[
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.bundle.js"],
+        "run_at": "document_idle"
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html" 
+    },
+    "background": {
+      "service_worker": "background.bundle.js" 
+    }, 
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' ; object-src 'self'"
+    }
+  }

@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// npx prisma studio for showing all the model
+// npx prisma db push for pushing the schema to the database
+// npx prisma migrate dev --name init for creating a migration used whenever there is a change in schema.prisma file
+// npx prisma generate for generating the client
+// npx prisma db seed for seeding the database
+// npx prisma migrate reset for resetting the database
+// npx prisma db pull for pulling the schema from the database
+// npx prisma format for formatting the schema
+// npx prisma validate for validating the schema
+// npx prisma migrate resolve --applied <migration_name> for resolving a migration
+
+// import error was this mc output   = "../src/generated/client" instead of importing from this folder I was using default @/prisma/client which was showing error even after generating prism
+// this output file where the client is generated
+
+// mcp   Starts an MCP server to use with AI development tools  i have to go thorugh the documentation for this
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+}
+
+model DomainStat {
+  id                    Int         @id @default(autoincrement())
+  name                  String      @unique // e.g., "google.com", "youtube.com"
+  totalTimeSpentSeconds Int         @default(0) // Cumulative total time spent on this domain
+  pageVisits            PageVisit[] // Relation to individual page visits within this domain
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  @@index([name]) // Index for faster lookups by domain name
+}
+
+// Model for storing active time spent on specific URLs (pages)
+model PageVisit {
+  id               Int     @id @default(autoincrement())
+  url              String  @unique // Full URL, e.g., "https://www.google.com/search?q=prisma"
+  title            String?
+  timeSpentSeconds Int     @default(0) // Cumulative time spent specifically on this URL
+
+  extractedText   String?    @db.Text
+  summary         String?    @db.Text
+  textExtractedAt DateTime?
+  // Relation to DomainStat
+  // We use domainName as the field storing the foreign key value, referencing DomainStat.name
+  domainName      String
+  domain          DomainStat @relation(fields: [domainName], references: [name], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([url]) // Index for faster lookups by full URL
+  @@index([domainName]) // Index for faster lookups by domainName
+  @@index([textExtractedAt])
+}
