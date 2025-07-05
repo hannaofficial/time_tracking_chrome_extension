@@ -1,3 +1,11 @@
+Incomplete project My main gal was to create a extension that can track what  you see in browser so that the extension can tell ok you are consuming this type of information in this time everyday that is not for you.I created mostly all the backend logic I didn't just did the frontend part that was boring type and also I got interested in other project that was more valuable that's why i didn't work on this project.<br/>
+Where i am in this project.<br/>
+This extension  can track the time in each web page and website you are visiting as well all the visible part of website that user can see can be be crawl by this website except for youtube where you can only extract title and description.I thought to extract subtitle from each video but I didn't continue the there it is in concept only<br/>
+Next part is easy just to implement api key key of any ai model (i just try to use opensource model from hugging face for summary that is enough but for complex analysis you can gemini model or other ) to give summary of the content we just crawl from each website and then just frontend design all. that's all <br/>
+I even stop project because my main goal was to know how to crawl any website I really how the crawling works there fore I guess the interest goes to another interesting project.<br/>
+But If some wanted to build this I think it is a really a great idea to make project on. You will learn how to build chrome extension, how to transfer data from chrome extension to local host, web crawling, implementation of ai and so many thing about the environment of browser and next.js
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
